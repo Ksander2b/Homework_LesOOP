@@ -44,8 +44,10 @@ class Mentor:
         self.courses_attached = []
 
 class Lecturer(Mentor):
-    grades = {}
-    
+    def __init__(self, name, surname):
+        super().__init__(name,surname)
+        self.grades = {}
+
     def average_rate(self):
         res = []
         for values in self.grades.values():
@@ -74,8 +76,6 @@ class Reviewer (Mentor):
     def __str__(self):
         res = f'Имя:{self.name}\nФамилия:{self.surname}'
         return res
-    
-
 
 
 student_1 = Student('Alex', 'Bogatyrev', 'male')
@@ -91,11 +91,13 @@ student_2.courses_in_progress += ['PHP']
 student_1.add_courses('Git')
 student_2.add_courses('Python')
 
+
 lecturer_1 = Lecturer('Adam', 'Smith')
 lecturer_1.courses_attached += ['Python']
 
 lecturer_2 = Lecturer('Stive', 'Jobs')
 lecturer_2.courses_attached += ['PHP']
+lecturer_2.courses_attached += ['Python']
 
 
 reviewer_1 = Reviewer('Albert', 'Enshtain')
@@ -111,51 +113,55 @@ reviewer_1.rate_student(student_2, 'JavaScript', 10)
 reviewer_1.rate_student(student_2, 'C++', 4)
 reviewer_1.rate_student(student_2, 'PHP', 6)
 
+reviewer_2 = Reviewer('Benzhamin', 'Franklin')
+
 student_1.rate_lecturer(lecturer_1, 'Python', 2)
 student_1.rate_lecturer(lecturer_1, 'Python', 6)
 student_1.rate_lecturer(lecturer_1, 'Python', 8)
+student_1.rate_lecturer(lecturer_1, 'Python', 8)
+student_1.rate_lecturer(lecturer_2, 'Python', 2)
+student_1.rate_lecturer(lecturer_2, 'Python', 5)
+
 
 student_2.rate_lecturer(lecturer_2, 'PHP', 2)
 student_2.rate_lecturer(lecturer_2, 'PHP', 6)
 student_2.rate_lecturer(lecturer_2, 'PHP', 2)
 
-print(lecturer_1.grades)
-print(student_1.grades)
+print(reviewer_1)
 print(lecturer_1)
-
 print(student_1)
-print(student_2.grades)
-
 is_lt = (student_2 > student_1)
 print(is_lt)
-
 is_lt_2 = (lecturer_1 < lecturer_2)
 print(is_lt_2)
 
 
+student_list = [student_1,student_2]  
+print(student_1.grades)
+print(student_2.grades)  
 
-# lecturer_Stiv = Lecturer('Stive', 'Jobs')
-# print(lecturer_Stiv.name)
+def intermediate_student_grade(list,cource_name):
+    res = []
+    for students in list:
+        for keys, values in students.grades.items():
+            if keys == cource_name:
+                res += values
+    res_final = sum(res)/len(res)
+    return res_final
 
+print(intermediate_student_grade(student_list, "C++"))
 
+lecturer_list = [lecturer_1, lecturer_2]
+print(lecturer_1.grades)
+print(lecturer_2.grades)
 
+def intermediate_lecturer_list(list,cource_name):
+    res = []
+    for lecturers in list:
+        for keys, values in lecturers.grades.items():
+            if keys == cource_name:
+                res += values
+    res_final = sum(res)/len(res)
+    return res_final
 
-# best_student = Student('Ruoy', 'Eman', 'your_gender')
-# best_student.finished_courses += ['Git']
-# best_student.courses_in_progress += ['Python']
-# best_student.grades['Git'] = [10, 10, 10, 10, 10]
-# best_student.grades['Python'] = [10, 10]
-
-# print(best_student.finished_courses)
-# print(best_student.courses_in_progress)
-# print(best_student.grades)
-
-# cool_mentor = Mentor('Some', 'Buddy')
-# cool_mentor.courses_attached += ['Python']
-# print(cool_mentor.courses_attached)
-
-# cool_mentor.rate_hw(best_student, 'Python', 10)
-# cool_mentor.rate_hw(best_student, 'Python', 10)
-# cool_mentor.rate_hw(best_student, 'Python', 10)
-
-# print(best_student.grades)
+print(intermediate_student_grade(lecturer_list, 'Python'))
